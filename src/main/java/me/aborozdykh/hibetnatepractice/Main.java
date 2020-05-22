@@ -63,8 +63,8 @@ public class Main {
 
         System.out.println("Get all by author");
         bookService.getAllByAuthor(authorFranko).forEach(System.out::println);
-/*
-        System.out.println("Get all by genre");
-        bookService.getAllByGenre(genreFantasy).forEach(System.out::println);*/
+
+        System.out.println("Get all by genre " + genreFantasy.getName());
+        bookService.getAllByGenre(genreFantasy).forEach(System.out::println);
     }
 }

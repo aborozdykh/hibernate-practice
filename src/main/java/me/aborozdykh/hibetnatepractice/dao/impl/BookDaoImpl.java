@@ -9,6 +9,7 @@ import me.aborozdykh.hibetnatepractice.models.Genre;
 import me.aborozdykh.hibetnatepractice.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -29,12 +30,12 @@ public class BookDaoImpl implements BookDao {
             transaction.commit();
             book.setId(bookId);
             return book;
-        } catch (Exception e){
+        } catch (Exception e) {
             if (session != null) {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't add book " + book.getTitle(), e);
-        } finally{
+        } finally {
             if (session != null) {
                 session.close();
             }
@@ -61,12 +62,11 @@ public class BookDaoImpl implements BookDao {
     public List<Book> getAllByAuthor(Author author) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Book> q = cb.createQuery(Book.class);
-            Root<Book> root = q.from(Book.class);
-            Predicate predicateForAuthor
-                    = cb.equal(root.get("author"), author);
-            q.where(predicateForAuthor);
-            return session.createQuery(q).getResultList();
+            CriteriaQuery<Book> bookCriteriaQuery = cb.createQuery(Book.class);
+            Root<Book> bookRoot = bookCriteriaQuery.from(Book.class);
+            Predicate predicateForBook = cb.isMember(author, bookRoot.get("authors"));
+            bookCriteriaQuery.where(predicateForBook);
+            return session.createQuery(bookCriteriaQuery).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available sessions", e);
         }
@@ -74,6 +74,16 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> getAllByGenre(Genre genre) {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Book> q = cb.createQuery(Book.class);
+            Root<Book> root = q.from(Book.class);
+            Predicate predicateForGenre
+                    = cb.equal(root.get("genre"), genre.getId());
+            q.where(predicateForGenre);
+            return session.createQuery(q).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find books by genre " + genre, e);
+        }
     }
 }
