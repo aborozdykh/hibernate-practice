@@ -26,7 +26,7 @@ public class GenreDaoImpl implements GenreDao {
             if (session != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add Genre " + genre.getName(), e);
+            throw new DataProcessingException("Can't add genre " + genre.getName(), e);
         } finally{
             if (session != null) {
                 session.close();

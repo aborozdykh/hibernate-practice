@@ -16,10 +16,12 @@ public class Main {
         GenreService genreService = (GenreService) injector.getInstance(GenreService.class);
         var genreFantasy = new Genre();
         genreFantasy.setName("Fantasy");
+        genreFantasy.setDescription("This is very interesting genre");
         genreService.add(genreFantasy);
 
         var genreClassic = new Genre();
         genreClassic.setName("Classic");
+        genreClassic.setDescription("Nothing more, just a classic");
         genreService.add(genreClassic);
 
 
@@ -30,14 +32,19 @@ public class Main {
         authorService.add(authorFranko);
 
         var authorTolkien = new Author();
-        authorFranko.setFirstName("John");
-        authorFranko.setLastName("Tolkien");
+        authorTolkien.setFirstName("John");
+        authorTolkien.setLastName("Tolkien");
         authorService.add(authorTolkien);
 
         var authorPrilipala = new Author();
-        authorFranko.setFirstName("Nagliy");
-        authorFranko.setLastName("Prilipala");
+        authorPrilipala.setFirstName("Nagliy");
+        authorPrilipala.setLastName("Prilipala");
         authorService.add(authorPrilipala);
+
+        var authorEsheOdinPrilipala = new Author();
+        authorEsheOdinPrilipala.setFirstName("Ochen Nagliy");
+        authorEsheOdinPrilipala.setLastName("Prilipala");
+        authorService.add(authorEsheOdinPrilipala);
 
         BookService bookService = (BookService) injector.getInstance(BookService.class);
         var bookZakharBerkut = new Book();
@@ -56,8 +63,8 @@ public class Main {
 
         System.out.println("Get all by author");
         bookService.getAllByAuthor(authorFranko).forEach(System.out::println);
-
+/*
         System.out.println("Get all by genre");
-        bookService.getAllByGenre(genreFantasy).forEach(System.out::println);
+        bookService.getAllByGenre(genreFantasy).forEach(System.out::println);*/
     }
 }

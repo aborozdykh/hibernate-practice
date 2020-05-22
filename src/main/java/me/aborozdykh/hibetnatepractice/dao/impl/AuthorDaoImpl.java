@@ -25,7 +25,7 @@ public class AuthorDaoImpl implements AuthorDao {
             if (session != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add Genre " + author.getLastName()
+            throw new DataProcessingException("Can't add author " + author.getLastName()
                     + " " + author.getFirstName(), e);
         } finally {
             if (session != null) {
