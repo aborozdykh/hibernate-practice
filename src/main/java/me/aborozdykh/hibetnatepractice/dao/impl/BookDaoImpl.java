@@ -1,5 +1,10 @@
 package me.aborozdykh.hibetnatepractice.dao.impl;
 
+import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import me.aborozdykh.hibetnatepractice.dao.BookDao;
 import me.aborozdykh.hibetnatepractice.exceptions.DataProcessingException;
 import me.aborozdykh.hibetnatepractice.lib.Dao;
@@ -9,13 +14,6 @@ import me.aborozdykh.hibetnatepractice.models.Genre;
 import me.aborozdykh.hibetnatepractice.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import java.time.LocalDateTime;
-import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 @Dao
 public class BookDaoImpl implements BookDao {
