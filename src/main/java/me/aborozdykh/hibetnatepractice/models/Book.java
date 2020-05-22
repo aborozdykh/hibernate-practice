@@ -1,9 +1,13 @@
 package me.aborozdykh.hibetnatepractice.models;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,7 +17,11 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String title;
-    Author author;
+
+    @OneToMany
+    List<Author> authors;
+
+    @OneToOne
     Genre genre;
 
     public Long getId() {
@@ -32,12 +40,12 @@ public class Book {
         this.title = title;
     }
 
-    public Author getAuthor() {
-        return author;
+    public List<Author> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     public Genre getGenre() {
@@ -53,7 +61,7 @@ public class Book {
         return "Book{"
                 + "id=" + id
                 + ", title='" + title + '\''
-                + ", author=" + author
+                + ", author=" + authors
                 + ", genre=" + genre
                 + '}';
     }
